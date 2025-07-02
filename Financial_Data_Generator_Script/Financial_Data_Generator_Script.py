@@ -1,4 +1,14 @@
-# 1. Import necessary libraries
+#!/usr/bin/env python
+# coding: utf-8
+
+# ## Generate Financial Transaction Data
+
+# ### 1. Import necessary libraries
+
+# In[ ]:
+
+
+# Import necessary libraries
 import pandas as pd
 import random
 from datetime import datetime
@@ -9,13 +19,22 @@ import uuid
 import decimal
 
 
+# ### 2. Initialize Faker
 
-# 2. Initialize Faker
+# In[ ]:
+
+
+# Initialize Faker
 faker = Faker()
 
 
+# ### 3. Function to generate random banking transactions
 
-# 3. Function to generate random banking transactions
+# In[ ]:
+
+
+# Function to generate random banking transactions
+
 def generate_transactions(num_records):
     data = []
     transaction_type_list = ['Deposit','Withdrawal','Transfer','Loan Payment']
@@ -60,27 +79,48 @@ def generate_transactions(num_records):
     return df
 
 
+# ### 4. Generate the data
 
-# 4. Generate number of records
-num_records = 500000 # Put the number of records to be generated here.
+# In[ ]:
+
+
+# Generate number of records
+num_records = 5000  #Input Here --> the number of records to be generated
 df = generate_transactions(num_records)
 
 
+# ### 5. Export to Excel file
 
-# 5. Function to export data to excel
+# #### 5.1. Function to export data to excel
+
+# In[ ]:
+
+
+# Function to export data to excel
+
 def export_to_excel(df, file_name, num_of_records):
     df.to_excel(file_name, index=False)
     current_directory = os.getcwd()
     print(f'Data exported sucessfully to {file_name} in path: {current_directory}!')
 
 
+# #### 5.2. Export data to Excel file
 
-# 6. Export to excel file
+# In[ ]:
+
+
+# Export to excel file
 file_name = 'Banking_transaction_data.xlsx'
-export_to_excel(df, file_name, 500)
+export_to_excel(df, file_name, num_records) 
 
 
-# 7. Function to insert data into SQL server using SqlAlchemy
+# ### 6. Populate data into SQL DB
+
+# #### 6.1. Function to insert data into SQL server using SqlAlchemy
+
+# In[ ]:
+
+
 from sqlalchemy import create_engine
 
 def insert_into_sqlalchemy(df, server, database, table_name):
@@ -92,10 +132,19 @@ def insert_into_sqlalchemy(df, server, database, table_name):
     print(f'Data inserted into table {database}.dbo.{table_name}')
 
 
+# In[ ]:
 
-# 8. Insert into SQL server
-server = <your-db-server-name>
-database = <your-db-name>
-table_name = <your-target-table-name>
+
+# Insert into SQL server
+server = '<Your-Server-Name>'
+database = '<Your-Database-Name>'
+table_name = 'SRC_FINANCIAL_TRANSACTIONS'
 
 insert_into_sqlalchemy(df, server, database, table_name)
+
+
+# In[ ]:
+
+
+
+
